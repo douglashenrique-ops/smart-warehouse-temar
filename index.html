@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Smart Warehouse – Revenda TEMAR</title>
+<style>
+:root{--bg:#111110;--s1:#1a1a19;--s2:#232321;--line:#33332f;--t1:#f2f2ef;--t2:#b5b4ad;--t3:#85847d;--acc:#3987e5;--neg:#ff7b7b;--ok:#5fd35f;--warn:#fab219}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--t1);font-family:Inter,system-ui,sans-serif;font-size:14px}
+.wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+.box{width:100%;max-width:380px;background:var(--s1);border:1px solid var(--line);border-radius:14px;padding:26px}
+.logo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
+.logo .ic{width:38px;height:38px;border-radius:10px;background:rgba(57,135,229,.18);display:flex;align-items:center;justify-content:center;font-size:20px}
+.logo b{font-size:19px;letter-spacing:.3px}
+.sub{color:var(--t3);font-size:12.5px;margin:0 0 20px 48px}
+label{display:block;font-size:12px;color:var(--t2);margin:12px 0 5px}
+input,select{width:100%;background:var(--s2);color:var(--t1);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit}
+input:focus{outline:none;border-color:var(--acc)}
+button{font:inherit;cursor:pointer;border-radius:8px;border:1px solid var(--line);background:var(--s2);color:var(--t1);padding:9px 14px}
+button.primary{width:100%;margin-top:18px;background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600;padding:11px}
+button:disabled{opacity:.5;cursor:wait}
+.msg{font-size:12.5px;margin-top:12px;min-height:18px}
+.msg.err{color:var(--neg)}.msg.ok{color:var(--ok)}
+.net{margin-top:20px;border-top:1px solid var(--line);padding-top:12px;font-size:12px;color:var(--t3)}
+.net div{display:flex;justify-content:space-between;margin:3px 0}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--t3);margin-right:6px}
+.dot.ok{background:var(--ok)}.dot.err{background:var(--neg)}
+.hide{display:none!important}
+.app{max-width:980px;margin:0 auto;padding:18px}
+.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+.top .who{margin-left:auto;font-size:12.5px;color:var(--t2)}
+.tag{font-size:11px;padding:2px 8px;border-radius:999px;font-weight:600}
+.tag.admin{background:rgba(57,135,229,.18);color:#7fb3f0}.tag.consulta{background:rgba(255,255,255,.08);color:var(--t2)}
+.tag.off{background:rgba(208,59,59,.18);color:var(--neg)}
+.card{background:var(--s1);border:1px solid var(--line);border-radius:12px;padding:16px;margin-bottom:14px}
+h3{margin:0 0 12px;font-size:14px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:8px;border-bottom:1px solid var(--line)}
+th{color:var(--t3);font-weight:500;font-size:12px}
+td button{padding:4px 9px;font-size:12px}
+.form{display:grid;grid-template-columns:1.2fr 1.4fr 1fr .9fr auto;gap:8px;align-items:end}
+.form label{margin:0 0 4px}
+@media(max-width:760px){.form{grid-template-columns:1fr}.hidem{display:none}}
+</style>
+</head>
+<body>
+<!-- LOGIN -->
+<div class="wrap" id="scrLogin">
+  <div class="box">
+    <div class="logo"><div class="ic">🏭</div><b>Smart Warehouse</b></div>
+    <p class="sub">Revenda TEMAR · Painel de Estoque</p>
+    <form id="fLogin">
+      <label>E-mail</label><input type="email" id="lEmail" autocomplete="username" required>
+      <label>Senha</label><input type="password" id="lPass" autocomplete="current-password" required>
+      <button class="primary" id="lBtn">Entrar</button>
+      <div class="msg" id="lMsg"></div>
+    </form>
+    <form id="fSetup" class="hide">
+      <p style="font-size:13px;color:var(--t2);margin:0">Primeiro acesso: crie o <b>administrador</b> do sistema.</p>
+      <label>Nome</label><input id="sNome" required>
+      <label>E-mail</label><input type="email" id="sEmail" required>
+      <label>Senha (mínimo 6 caracteres)</label><input type="password" id="sPass" minlength="6" required>
+      <button class="primary" id="sBtn">Criar administrador</button>
+      <div class="msg" id="sMsg"></div>
+    </form>
+    <div class="net">
+      <div><span>Conexão com o servidor</span><span id="netSrv"><i class="dot"></i>testando…</span></div>
+      <div><span>Bibliotecas</span><span id="netLib"><i class="dot"></i>testando…</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ÁREA LOGADA (teste) -->
+<div class="app hide" id="scrApp">
+  <div class="top">
+    <div class="logo" style="margin:0"><div class="ic">🏭</div><b>Smart Warehouse</b></div>
+    <span class="who" id="who"></span>
+    <button id="btnOut">Sair</button>
+  </div>
+  <div class="card">
+    <h3>✅ Acesso funcionando</h3>
+    <p style="margin:0;color:var(--t2);font-size:13px;line-height:1.6">Esta é a página de teste. Se você está vendo esta tela, o login e a conexão com o servidor estão funcionando nesta rede.<br>O painel de estoque completo entra aqui na próxima etapa.</p>
+  </div>
+  <div class="card hide" id="cardUsers">
+    <h3>👥 Usuários</h3>
+    <form class="form" id="fNew">
+      <div><label>Nome</label><input id="nNome" required></div>
+      <div><label>E-mail</label><input type="email" id="nEmail" required></div>
+      <div><label>Senha</label><input id="nPass" minlength="6" required placeholder="mín. 6 caracteres"></div>
+      <div><label>Nível</label><select id="nPapel"><option value="consulta">Consulta</option><option value="admin">Administrador</option></select></div>
+      <button id="nBtn" style="background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600">Cadastrar</button>
+    </form>
+    <div class="msg" id="uMsg"></div>
+    <div style="overflow-x:auto"><table><thead><tr><th>Nome</th><th>E-mail</th><th>Nível</th><th class="hidem">Status</th><th></th></tr></thead><tbody id="uBody"></tbody></table></div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const SB_URL='https://qakaijyjbrrgmepwghmr.supabase.co';
+const SB_KEY='sb_publishable_rzHdLJk_X4WgbOPJOgvw3w_IhPEG2R9';
+const $=s=>document.querySelector(s);
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function msg(id,t,cls){ const m=$(id); m.textContent=t||''; m.className='msg '+(cls||''); }
+const net=(id,ok,t)=>$(id).innerHTML=`<i class="dot ${ok?'ok':'err'}"></i>${t}`;
+
+if(!window.supabase){ net('#netLib',false,'bloqueado'); net('#netSrv',false,'—'); msg('#lMsg','A rede bloqueou o carregamento do sistema (cdn.jsdelivr.net).','err'); throw new Error('lib'); }
+net('#netLib',true,'ok');
+const sb=supabase.createClient(SB_URL,SB_KEY);
+let ME=null;
+
+async function fn(action,payload){ const {data,error}=await sb.functions.invoke('admin-users',{body:Object.assign({action},payload||{})});
+  if(error){ let m=error.message; try{ const j=await error.context.json(); m=j.error||m; }catch(e){} throw new Error(m); } if(data&&data.error) throw new Error(data.error); return data; }
+
+(async()=>{
+  try{ const r=await fetch(SB_URL+'/auth/v1/health',{headers:{apikey:SB_KEY}}); net('#netSrv',r.ok,r.ok?'ok':'erro '+r.status); }catch(e){ net('#netSrv',false,'bloqueado'); msg('#lMsg','A rede bloqueou o acesso ao servidor (supabase.co).','err'); }
+  const {data:{session}}=await sb.auth.getSession();
+  if(session) return enter();
+  try{ const st=await fn('status'); if(st.needsSetup){ $('#fLogin').classList.add('hide'); $('#fSetup').classList.remove('hide'); } }catch(e){}
+})();
+
+$('#fLogin').onsubmit=async e=>{ e.preventDefault(); const b=$('#lBtn'); b.disabled=true; msg('#lMsg','Entrando…');
+  const {error}=await sb.auth.signInWithPassword({email:$('#lEmail').value.trim().toLowerCase(),password:$('#lPass').value});
+  b.disabled=false; if(error){ msg('#lMsg',/banned/i.test(error.message)?'Usuário bloqueado. Fale com o administrador.':'E-mail ou senha incorretos.','err'); return; } enter(); };
+
+$('#fSetup').onsubmit=async e=>{ e.preventDefault(); const b=$('#sBtn'); b.disabled=true; msg('#sMsg','Criando…');
+  try{ await fn('bootstrap',{nome:$('#sNome').value.trim(),email:$('#sEmail').value,password:$('#sPass').value});
+    const {error}=await sb.auth.signInWithPassword({email:$('#sEmail').value.trim().toLowerCase(),password:$('#sPass').value}); if(error) throw error; enter();
+  }catch(err){ msg('#sMsg',err.message,'err'); } b.disabled=false; };
+
+async function enter(){
+  const {data:{user}}=await sb.auth.getUser(); if(!user) return;
+  const {data:p}=await sb.from('profiles').select('*').eq('id',user.id).maybeSingle();
+  if(!p||!p.ativo){ await sb.auth.signOut(); msg('#lMsg','Seu acesso não está liberado. Fale com o administrador.','err'); return; }
+  ME=p; $('#scrLogin').classList.add('hide'); $('#scrApp').classList.remove('hide');
+  $('#who').innerHTML=`${esc(p.nome||p.email)} <span class="tag ${p.papel}">${p.papel==='admin'?'Administrador':'Consulta'}</span>`;
+  if(p.papel==='admin'){ $('#cardUsers').classList.remove('hide'); loadUsers(); }
+}
+$('#btnOut').onclick=async()=>{ await sb.auth.signOut(); location.reload(); };
+
+async function loadUsers(){ try{ const {users}=await fn('list');
+  $('#uBody').innerHTML=users.map(u=>`<tr data-id="${u.id}"><td>${esc(u.nome||'–')}</td><td>${esc(u.email)}</td>
+    <td><select data-a="papel" ${u.id===ME.id?'disabled':''} style="padding:4px 8px;width:auto"><option value="consulta" ${u.papel==='consulta'?'selected':''}>Consulta</option><option value="admin" ${u.papel==='admin'?'selected':''}>Administrador</option></select></td>
+    <td class="hidem"><span class="tag ${u.ativo?'consulta':'off'}">${u.ativo?'Ativo':'Bloqueado'}</span></td>
+    <td style="white-space:nowrap"><button data-a="pass">Trocar senha</button> ${u.id===ME.id?'':`<button data-a="ativo">${u.ativo?'Bloquear':'Desbloquear'}</button>`}</td></tr>`).join('');
+  }catch(e){ msg('#uMsg',e.message,'err'); } }
+
+$('#fNew').onsubmit=async e=>{ e.preventDefault(); const b=$('#nBtn'); b.disabled=true;
+  try{ await fn('create',{nome:$('#nNome').value.trim(),email:$('#nEmail').value,password:$('#nPass').value,papel:$('#nPapel').value});
+    msg('#uMsg','Usuário cadastrado. Já pode entrar com o e-mail e a senha.','ok'); $('#fNew').reset(); loadUsers(); }catch(err){ msg('#uMsg',err.message,'err'); } b.disabled=false; };
+
+$('#uBody').addEventListener('change',async e=>{ const s=e.target.closest('select[data-a=papel]'); if(!s) return; const id=s.closest('tr').dataset.id;
+  try{ await fn('update',{id,papel:s.value}); msg('#uMsg','Nível atualizado.','ok'); }catch(err){ msg('#uMsg',err.message,'err'); loadUsers(); } });
+$('#uBody').addEventListener('click',async e=>{ const b=e.target.closest('button[data-a]'); if(!b) return; const tr=b.closest('tr'), id=tr.dataset.id;
+  try{
+    if(b.dataset.a==='pass'){ const p=prompt('Nova senha (mínimo 6 caracteres):'); if(!p) return; await fn('password',{id,password:p}); msg('#uMsg','Senha alterada.','ok'); }
+    if(b.dataset.a==='ativo'){ const bloquear=b.textContent==='Bloquear'; await fn('update',{id,ativo:!bloquear}); msg('#uMsg',bloquear?'Usuário bloqueado.':'Usuário desbloqueado.','ok'); loadUsers(); }
+  }catch(err){ msg('#uMsg',err.message,'err'); } });
+</script>
+</body>
+</html>
