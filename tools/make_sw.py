@@ -54,6 +54,8 @@ AUTH_CSS = r'''
 #auth button{width:100%;margin-top:18px;padding:11px}
 #auth .amsg{font-size:12.5px;margin-top:12px;min-height:18px;color:var(--neg)}
 body.booting header,body.booting .shell{visibility:hidden}
+:root:not([data-theme="light"]){--bg:#0a1f2e;--surface-1:#112c40;--surface-2:#15344c;--surface-3:#1b3d57;--line:#1f4058;--hdr:rgba(10,31,46,.96);--sum:rgba(17,44,64,.94);--grid:#1d3a50;--text-muted:#8fa3b5}
+:root:not([data-theme="light"]) nav.tabs{background:#0c2436}
 #whoPill b{font-weight:600;color:var(--text-primary)}
 .rtag{font-size:10.5px;padding:1px 7px;border-radius:999px;font-weight:700;margin-left:4px}
 .rtag.admin{background:rgba(57,135,229,.18);color:var(--pos)}.rtag.consulta{background:var(--surface-3);color:var(--text-secondary)}
@@ -299,5 +301,17 @@ authStart();
 '''
 i = s.rindex("</script>\n</body>")
 s = s[:i] + AUTH_JS + s[i:]
+# tema azul petróleo: gráficos e abertura 3D
+for a,b in [("Chart.defaults.borderColor=L?'#d9d8d2':'#383835'","Chart.defaults.borderColor=L?'#d9d8d2':'#1f4058'"),
+            ("Chart.defaults.plugins.tooltip.backgroundColor=L?'#ffffff':'#2c2c29'","Chart.defaults.plugins.tooltip.backgroundColor=L?'#ffffff':'#15344c'"),
+            ("Chart.defaults.plugins.tooltip.borderColor=L?'#d9d8d2':'#4a4a46'","Chart.defaults.plugins.tooltip.borderColor=L?'#d9d8d2':'#2a5070'"),
+            ("#auth{position:fixed;inset:0;z-index:200;background:#0d1118;","#auth{position:fixed;inset:0;z-index:200;background:#0a1f2e;"),
+            ("scene.background=new THREE.Color(0x0d1118); scene.fog=new THREE.Fog(0x0d1118,30,70);","scene.background=new THREE.Color(0x0a1f2e); scene.fog=new THREE.Fog(0x0a1f2e,30,70);"),
+            ("box(60,.1,30,M(0x161b23),0,-.05,0);","box(60,.1,30,M(0x0f2a3c),0,-.05,0);"),
+            ("box(.04,.01,30,M(0x1f2631),i,.01,0);","box(.04,.01,30,M(0x1a3a50),i,.01,0);"),
+            ("#auth .abox{position:relative;z-index:3;width:100%;max-width:360px;background:rgba(20,23,29,.82);","#auth .abox{position:relative;z-index:3;width:100%;max-width:360px;background:rgba(12,36,54,.82);"),
+            ("#introG{position:absolute;z-index:2;right:clamp(18px,5vw,64px);top:clamp(18px,9vh,90px);background:rgba(18,22,30,.88);border:1px solid #2b3445;","#introG{position:absolute;z-index:2;right:clamp(18px,5vw,64px);top:clamp(18px,9vh,90px);background:rgba(17,44,64,.9);border:1px solid #2a5070;")]:
+    if a not in s: raise SystemExit('NAO ACHEI TEMA: '+a[:60])
+    s=s.replace(a,b)
 open(dst, 'w', encoding='utf-8').write(s)
 print('ok', len(s))
