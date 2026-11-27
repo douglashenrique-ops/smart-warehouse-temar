@@ -15,9 +15,9 @@ SB_URL = 'https://qakaijyjbrrgmepwghmr.supabase.co'
 SB_KEY = 'sb_publishable_rzHdLJk_X4WgbOPJOgvw3w_IhPEG2R9'
 
 # 1. título, marca, biblioteca supabase
-rep('<title>Painel de Ocupação de Estoque – TEMAR</title>', '<title>Smart Warehouse – Revenda TEMAR</title>')
+rep('<title>Painel de Ocupação de Estoque – TEMAR</title>', '<title>Smart Warehouse – Revenda TEMAR</title>\n<link rel="icon" type="image/png" href="favicon.png">')
 rep('<div class="brand"><b>Painel de Ocupação de Estoque</b><span>Revenda TEMAR · Saldo real × Política × Capacidade do layout</span></div>',
-    '<div class="brand"><b>🏭 Smart Warehouse</b><span>Revenda TEMAR · Painel de Ocupação de Estoque</span></div>')
+    '<div class="brand" style="flex-direction:row;align-items:center;gap:10px"><img src="logo.png" alt="" style="height:36px;width:auto"><div style="display:flex;flex-direction:column;line-height:1.15"><b>Smart Warehouse</b><span>Revenda TEMAR · Painel de Ocupação de Estoque</span></div></div>')
 rep('<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>',
     '<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>\n'
     '<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>')
@@ -29,7 +29,8 @@ AUTH_CSS = r'''
 #auth .alogo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
 #auth .alogo i{width:38px;height:38px;border-radius:10px;background:rgba(57,135,229,.18);display:flex;align-items:center;justify-content:center;font-size:20px;font-style:normal}
 #auth .alogo b{font-size:19px;letter-spacing:.3px}
-#auth .asub{color:var(--text-muted);font-size:12.5px;margin:0 0 20px 48px}
+#auth .asub{color:var(--text-muted);font-size:12.5px;margin:0 0 20px 0}
+#auth .acred{margin-top:18px;text-align:center;font-size:10.5px;line-height:1.35;color:var(--text-muted);letter-spacing:.3px}
 #auth label{display:block;font-size:12px;color:var(--text-secondary);margin:12px 0 5px}
 #auth input{width:100%;background:var(--surface-2);color:var(--text-primary);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit}
 #auth button{width:100%;margin-top:18px;padding:11px}
@@ -50,7 +51,7 @@ rep('</style>\n</head>', AUTH_CSS + '</style>\n</head>')
 rep('<body>\n', '''<body class="booting">
 <div id="auth">
   <div class="abox">
-    <div class="alogo"><i>🏭</i><b>Smart Warehouse</b></div>
+    <div class="alogo"><img src="logo.png" alt="" style="height:42px;width:auto"><b>Smart Warehouse</b></div>
     <p class="asub">Revenda TEMAR · Painel de Estoque</p>
     <form id="fLogin">
       <label>E-mail</label><input type="email" id="lEmail" autocomplete="username" required>
@@ -58,6 +59,7 @@ rep('<body>\n', '''<body class="booting">
       <button class="primary" id="lBtn">Entrar</button>
       <div class="amsg" id="lMsg"></div>
     </form>
+    <div class="acred">Douglas Henrique<br>God</div>
   </div>
 </div>
 ''')

@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Smart Warehouse – Revenda TEMAR</title>
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
@@ -229,7 +230,8 @@ a.lnk{color:var(--pos);cursor:pointer;text-decoration:underline}
 #auth .alogo{display:flex;align-items:center;gap:10px;margin-bottom:4px}
 #auth .alogo i{width:38px;height:38px;border-radius:10px;background:rgba(57,135,229,.18);display:flex;align-items:center;justify-content:center;font-size:20px;font-style:normal}
 #auth .alogo b{font-size:19px;letter-spacing:.3px}
-#auth .asub{color:var(--text-muted);font-size:12.5px;margin:0 0 20px 48px}
+#auth .asub{color:var(--text-muted);font-size:12.5px;margin:0 0 20px 0}
+#auth .acred{margin-top:18px;text-align:center;font-size:10.5px;line-height:1.35;color:var(--text-muted);letter-spacing:.3px}
 #auth label{display:block;font-size:12px;color:var(--text-secondary);margin:12px 0 5px}
 #auth input{width:100%;background:var(--surface-2);color:var(--text-primary);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:inherit}
 #auth button{width:100%;margin-top:18px;padding:11px}
@@ -248,7 +250,7 @@ body.ro #expAging,body.ro #expOcup,body.ro #armPal,body.ro #armHl,body.ro #tblPa
 <body class="booting">
 <div id="auth">
   <div class="abox">
-    <div class="alogo"><i>🏭</i><b>Smart Warehouse</b></div>
+    <div class="alogo"><img src="logo.png" alt="" style="height:42px;width:auto"><b>Smart Warehouse</b></div>
     <p class="asub">Revenda TEMAR · Painel de Estoque</p>
     <form id="fLogin">
       <label>E-mail</label><input type="email" id="lEmail" autocomplete="username" required>
@@ -256,12 +258,13 @@ body.ro #expAging,body.ro #expOcup,body.ro #armPal,body.ro #armHl,body.ro #tblPa
       <button class="primary" id="lBtn">Entrar</button>
       <div class="amsg" id="lMsg"></div>
     </form>
+    <div class="acred">Douglas Henrique<br>God</div>
   </div>
 </div>
 <header>
   <div class="hbar">
     <button id="btnMenu" title="Menu">☰</button>
-    <div class="brand"><b>🏭 Smart Warehouse</b><span>Revenda TEMAR · Painel de Ocupação de Estoque</span></div>
+    <div class="brand" style="flex-direction:row;align-items:center;gap:10px"><img src="logo.png" alt="" style="height:36px;width:auto"><div style="display:flex;flex-direction:column;line-height:1.15"><b>Smart Warehouse</b><span>Revenda TEMAR · Painel de Ocupação de Estoque</span></div></div>
     <span class="pill" id="saveState"><i class="dot"></i><span>Conectando…</span></span>
     <label class="pill">Dia <select id="dateSel"><option value="">—</option></select></label>
     <span class="pill" id="whoPill"></span>
